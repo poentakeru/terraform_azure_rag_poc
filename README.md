@@ -1,6 +1,7 @@
 # terraform_azure_rag_poc
 perform IaC CI/CD using Terraform and Github Actions
 
+# folder structure
 
 ```bash
 .
@@ -14,3 +15,6 @@ perform IaC CI/CD using Terraform and Github Actions
         └── install_docker_fastapi.sh  # VM上で実行する初期スクリプト
 
 ```
+
+# visual representation of the infrastructure
+![Azure infrastracture diagram](img/diagram.svg)
