@@ -1,0 +1,12 @@
+# Terraform variables
+terraform.tfvars
+*.tfvars
+.terraform.lock.hcl
+
+# Terraform folders
+.terraform/
+
+# Docs
+diagram.drawio.svg
+
+
