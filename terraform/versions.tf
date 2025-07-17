@@ -6,7 +6,12 @@ terraform {
         version = "~> 3.100"
       }
      }
-    backend "azurerm" {} # 必要に応じて後で記述
+    backend "azurerm" {
+      resource_group_name   = "tfstate-rg"
+      storage_account_name  = "mytfstateacctpoent"
+      container_name        = "tfstate"
+      key                   = "terraform.tfstate"
+    }
 }
 provider "azurerm" {
     features {}
