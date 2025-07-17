@@ -12,8 +12,3 @@ variable "vm_name" {
     type = string
     description = "仮想マシンの名前"
 }
-
-variable "storage_account_name" {
-    type = string
-    default = "mytfstateacctpoent"
-}
