@@ -5,16 +5,24 @@ perform IaC CI/CD using Terraform and Github Actions
 
 ```bash
 .
-├── README.md                    # プロジェクトの説明
+├── README.md                        # プロジェクトの説明
+├── .github/
+│   └── workflows/
+│       └── azure-deploy.yml         # GitHub Actions ワークフロー（テンプレート）
+├── img/
+│   ├── diagram.drawio.svg
+│   └── diagram.svg
 └── terraform/
-    ├── main.tf                 # メインのTerraformリソース定義（VMやRGなど）
-    ├── outputs.tf              # 出力値定義（例: public IPなど）
-    ├── variables.tf            # 入力変数の定義
-    ├── versions.tf             # プロバイダー・Terraform本体のバージョン指定
+    ├── main.tf                     # メインのTerraformリソース定義（VMやRGなど）
+    ├── outputs.tf                  # 出力値定義（例: public IPなど）
+    ├── variables.tf                # 入力変数の定義
+    ├── versions.tf                 # プロバイダー・Terraform本体のバージョン指定
+    ├── terraform.tfvars.example    # 変数値のサンプル
     └── scripts/
         └── install_docker_fastapi.sh  # VM上で実行する初期スクリプト
 
 ```
+`.github/workflows/azure-deploy.yml` は空のテンプレートです。CI/CD の設定を行う際はこのファイルを編集してください。
 
 # visual representation of the infrastructure
 ![Azure infrastracture diagram](img/diagram.svg)
@@ -56,13 +64,14 @@ az storage container create \
 cd terraform  # ← *.tf ファイルがあるディレクトリへ移動
 terraform init
 ```
+`versions.tf` 内の `backend \"azurerm\"` ブロックにある `storage_account_name` は、作成したストレージアカウント名に合わせて変更してください。
 
 - 仮想マシンのadminユーザーとしてログインする際のssh鍵を以下のように作成します。
 ```bash
 ssh-keygen -t rsa -f ~/.ssh/id_rsa_azure
 ```
 
-- 実行前に以下のコマンドでエラーが無いかチェックします。`terraform.tfvars`は`.tf`ファイル内で記述されている変数の値を格納するファイルです。このファイルは`.gitignore`ファイルでGithubにプッシュされないように制御しているため、参考として`terraform.tfvars.example`を代わりに配置しました。
+- 実行前に以下のコマンドでエラーが無いかチェックします。`terraform.tfvars`は`.tf`ファイル内で記述されている変数の値を格納するファイルです。リポジトリには`.gitignore`が含まれていないため、`terraform/terraform.tfvars`をコミットしないよう必要に応じて`.gitignore`を作成してください。参考として`terraform.tfvars.example`を代わりに配置しました。
 ```bash
 terraform plan -var-file="terraform.tfvars"
 ```
